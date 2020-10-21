@@ -1,7 +1,7 @@
 import csv
 
 
-def get_list_with_tuples(csv_file):
+def csvToList(csv_file):
     print("\nOpening", csv_file + "...")
 
     with open(csv_file, newline='') as f:

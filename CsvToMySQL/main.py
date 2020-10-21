@@ -5,11 +5,15 @@ from mySqlAPI import MySQLAPI
 def main():
     val = csvToList('main.csv')
 
-    mySqlAPI = MySQLAPI('namedatabase', 'password_to_db')
+    database = input("\ndatabase: ")
+    password = input("password: ")
+    table = input("table: ")
 
-    mySqlAPI.list_to_db('persons', val)
+    mySqlAPI = MySQLAPI(database, password)
 
-    print(mySqlAPI.db_to_list('persons'))
+    mySqlAPI.list_to_db(table, val)
+
+    print(mySqlAPI.db_to_list(table))
 
 
 if __name__ == '__main__':

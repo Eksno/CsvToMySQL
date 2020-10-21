@@ -5,7 +5,7 @@ from mySqlAPI import MySQLAPI
 def main():
     val = csvToList('main.csv')
 
-    mySqlAPI = MySQLAPI('namedatabase', secret)
+    mySqlAPI = MySQLAPI('namedatabase', 'password_to_db')
 
     mySqlAPI.list_to_db('persons', val)
 

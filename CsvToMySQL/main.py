@@ -1,5 +1,3 @@
-secret = 'Jovili04'
-
 from csvReader import csvToList
 from mySqlAPI import MySQLAPI
 

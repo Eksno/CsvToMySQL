@@ -1,11 +1,11 @@
 secret = 'Jovili04'
 
-from csvToList import get_list
+from csvReader import csvToList
 from mySqlAPI import MySQLAPI
 
 
 def main():
-    val = get_list('main.csv')
+    val = csvToList('main.csv')
 
     mySqlAPI = MySQLAPI('namedatabase', secret)
 

@@ -5,11 +5,13 @@ from mySqlAPI import MySQLAPI
 def main():
     val = csvToList('main.csv')
 
-    database = input("\ndatabase: ")
+    host = input("host")
+    user = input("user")
     password = input("password: ")
+    database = input("database: ")
     table = input("table: ")
 
-    mySqlAPI = MySQLAPI(database, password)
+    mySqlAPI = MySQLAPI(host, user, password, database)
 
     mySqlAPI.list_to_db(table, val)
 

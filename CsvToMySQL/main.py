@@ -1,9 +1,9 @@
-from csvReader import csvToList
+from csvReader import csv_to_list
 from mySqlAPI import MySQLAPI
 
 
 def main():
-    val = csvToList('main.csv')
+    val = csv_to_list('people.csv')
 
     host = input("host")
     user = input("user")
@@ -11,11 +11,11 @@ def main():
     database = input("database: ")
     table = input("table: ")
 
-    mySqlAPI = MySQLAPI(host, user, password, database)
+    my_sql_api = MySQLAPI(host, user, password, database)
 
-    mySqlAPI.list_to_db(table, val)
+    my_sql_api.list_to_db(table, val)
 
-    print(mySqlAPI.db_to_list(table))
+    print(my_sql_api.db_to_list(table))
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 import csv
 
 
-def csvToList(csv_file):
+def csv_to_list(csv_file):
     print("\nOpening", csv_file + "...")
 
     with open(csv_file, newline='') as f:

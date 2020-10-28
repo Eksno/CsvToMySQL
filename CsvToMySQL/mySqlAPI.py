@@ -5,7 +5,7 @@ class MySQLAPI:
     def __init__(self, host, user, password, database):
         print("\nInitialising API...")
 
-        print(" > Connecting to database...")
+        print(" - Connecting to database...")
         self.db = mysql.connector.connect(
             host=host,
             user=user,
@@ -15,14 +15,17 @@ class MySQLAPI:
 
         self.cursor = self.db.cursor()
 
-        print("API initialised.")
+        print(" / API initialised.")
 
-    def clear(self, table, condition=None):
+    def clear(self, table):
         print(f"\nClearing {table}...")
 
         self.cursor.execute(f"TRUNCATE TABLE {table}")
 
-        print(f"{table} has been cleared.")
+        print(f" / {table} has been cleared.")
+
+    def rowcount(self, table):
+        return self.cursor.rowcount
 
     def list_to_db(self, table, val):
         print(f"\nInserting list into {table}...")
@@ -38,14 +41,15 @@ class MySQLAPI:
 
         # Creates an sql command able to insert a list of values into the table.
         sql = f"INSERT INTO {table} {column_names} VALUES {column_value_template}"
-        print(sql)
 
         # Inserts everything in the given list into the table
         self.cursor.executemany(sql, val[1:])
 
         self.db.commit()
 
-        print(f"{len(val) - 1} records inserted | Last ID: {self.cursor.lastrowid - 1}")
+        print(f" / {len(val) - 1} records inserted.")
+        self.cursor.execute(f"SELECT COUNT(*) FROM {table}")
+        return len(self.cursor.fetchall())
 
     def db_to_list(self, table):
         print(f"\nInserting {table} into list...")
@@ -54,6 +58,5 @@ class MySQLAPI:
 
         rows = [row for row in self.cursor.fetchall()]
 
-        print(f"{len(rows)} records collected.")
+        print(f" / {len(rows)} records collected.")
         return rows
-

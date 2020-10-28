@@ -22,7 +22,6 @@ def main():
     print("Oldest people:", [p for p in val if p[3] == max([p[3] for p in val])])
     print("Age Difference between youngest and oldest:", max([p[3] for p in val]) - min([p[3] for p in val]))
     print("Average age:", sum([p[3] for p in val]) / len([p[3] for p in val]))
-    print("")
 
 
 def get_login_details():

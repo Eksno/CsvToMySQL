@@ -5,13 +5,15 @@ from mySqlAPI import MySQLAPI
 def main():
     val = csv_to_list('people.csv')
 
-    host = input("host")
-    user = input("user")
+    host = input("host: ")
+    user = input("user: ")
     password = input("password: ")
     database = input("database: ")
     table = input("table: ")
 
     my_sql_api = MySQLAPI(host, user, password, database)
+
+    my_sql_api.clear(table)
 
     my_sql_api.list_to_db(table, val)
 

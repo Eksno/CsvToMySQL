@@ -5,14 +5,13 @@ class MySQLAPI:
     def __init__(self, host, user, password, database):
         print("\nInitialising API...")
 
-        print(" - Connecting to database...")
+        print(" > Connecting to database...")
         self.db = mysql.connector.connect(
             host=host,
             user=user,
             password=password,
             database=database
         )
-        print(" - Connected.")
 
         self.cursor = self.db.cursor()
 
@@ -21,28 +20,40 @@ class MySQLAPI:
     def clear(self, table, condition=None):
         print(f"\nClearing {table}...")
 
-        self.cursor.execute(f"DELETE FROM {table}")
-        if condition is not None:
-            self.cursor.execute(f"WHERE {condition}")
+        self.cursor.execute(f"TRUNCATE TABLE {table}")
 
         print(f"{table} has been cleared.")
 
     def list_to_db(self, table, val):
         print(f"\nInserting list into {table}...")
 
-        # Inserts everything in the given list into the table given using the execute many command
-        sql = f"INSERT INTO {table} (firstname, lastname, age) VALUES (%s, %s, %s)"
-        self.cursor.executemany(sql, val)
+        # Creates a string that contains column_names in a tuple like string.
+        # Ex: (First Name, Last Name, Age)
+        column_names = str(tuple(val[0])).replace('\'', '')
+
+        # Creates a string that contains %s in a tuple like string
+        # where the amount of %s is equal to the amount of columns.
+        # Ex: (%s, %s, %s)
+        column_value_template = str(tuple("%s" for _ in val[0])).replace('\'', '')
+
+        # Creates an sql command able to insert a list of values into the table.
+        sql = f"INSERT INTO {table} {column_names} VALUES {column_value_template}"
+        print(sql)
+
+        # Inserts everything in the given list into the table
+        self.cursor.executemany(sql, val[1:])
 
         self.db.commit()
 
-        print(f"{len(val)} records inserted | Last ID: {self.cursor.lastrowid}")
+        print(f"{len(val) - 1} records inserted | Last ID: {self.cursor.lastrowid - 1}")
 
     def db_to_list(self, table):
         print(f"\nInserting {table} into list...")
 
         self.cursor.execute(f"SELECT * FROM {table}")
 
-        print(f"{len(self.cursor.fetchall())} records collected.")
-        return [x for x in self.cursor.fetchall()]
+        rows = [row for row in self.cursor.fetchall()]
+
+        print(f"{len(rows)} records collected.")
+        return rows
 

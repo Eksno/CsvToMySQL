@@ -2,17 +2,18 @@ import csv
 
 
 def csv_to_list(csv_file):
-    print("\nOpening", csv_file + "...")
+    print(f"Converting {csv_file} to list...")
 
+    print(f" > Opening {csv_file}...")
     with open(csv_file, newline='') as f:
         reader = csv.reader(f)
 
-        print("Opened.\nCreating list of contents...")
+        print(" > Creating list of contents...")
 
         val = []
         for row in reader:
             val.append(row)
 
-    print("List created.\nList:", val)
+    print(f"{csv_file} has been converted.")
 
     return val
